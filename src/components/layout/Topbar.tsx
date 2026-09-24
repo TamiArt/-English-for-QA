@@ -1,0 +1,3 @@
+import { Flame, Menu, Settings } from 'lucide-react';
+
+export const Topbar = ({ streak }: { streak: number }) => <header className="topbar"><button className="mobile-menu" aria-label="Открыть меню"><Menu size={20} /></button><span className="breadcrumb">Путь обучения <b>/</b> Обзор</span><div className="top-actions"><span className="streak"><Flame size={17} fill="currentColor" /> {streak} дня</span><button className="icon-button" aria-label="Настройки"><Settings size={18} /></button><div className="mini-avatar">A</div></div></header>;

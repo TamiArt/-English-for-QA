@@ -1,0 +1,4 @@
+import { Headphones, Trophy, Zap } from 'lucide-react';
+import { Button } from '../ui/Button';
+
+export const Hero = ({ onContinue }: { onContinue: () => void }) => <section className="hero"><div className="hero-copy"><span className="eyebrow">Четверг, 24 сентября · 12 минут сегодня</span><h1>Английский, который<br /><i>работает</i> на тебя.</h1><p>Маленькие шаги каждый день. От первых букв до уверенного разговора на IT-собеседовании.</p><Button onClick={onContinue}>Продолжить обучение <Zap size={16} fill="currentColor" /></Button></div><div className="hero-orbit"><div className="orbit-ring ring-one" /><div className="orbit-ring ring-two" /><div className="hero-note note-one"><Headphones size={16} /><span>Слушай<br /><b>и повторяй</b></span></div><div className="hero-note note-two"><Trophy size={16} /><span>+30 XP<br /><b>за урок</b></span></div><div className="orbit-core"><span>01</span><strong>START</strong><small>твой уровень</small></div></div></section>;
