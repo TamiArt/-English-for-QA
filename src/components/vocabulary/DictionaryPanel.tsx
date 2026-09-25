@@ -1,4 +1,4 @@
-import { BookOpen, ChevronLeft, ChevronRight, Layers3, Search, Shuffle, SlidersHorizontal } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight, Search, Shuffle, SlidersHorizontal } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { dictionary } from '../../data/dictionary';
 import type { VocabularyCategory, VocabularyLevel } from '../../types';
@@ -16,11 +16,6 @@ export const DictionaryPanel = () => {
   const [page, setPage] = useState(0);
   const [studyMode, setStudyMode] = useState(false);
   const [studyIndex, setStudyIndex] = useState(0);
-
-  const topics = useMemo(
-    () => [...new Set(dictionary.map((entry) => entry.topic || 'Основное'))].sort((a, b) => a.localeCompare(b, 'ru')),
-    [],
-  );
 
   const levelCounts = useMemo(
     () => Object.fromEntries(levels.map((item) => [item, dictionary.filter((entry) => entry.level === item).length])),
@@ -72,37 +67,14 @@ export const DictionaryPanel = () => {
 
       <div className="dictionary-learning-head">
         <div>
-          <span className="dictionary-kicker">Учебная траектория</span>
-          <h3>Выбери уровень → тему → учи словами</h3>
-          <p>Начинай с A1 и переходи дальше, когда базовые слова становятся знакомыми.</p>
+          <span className="dictionary-kicker">Фильтры словаря</span>
+          <h3>Выбери уровень, тему или направление</h3>
+          <p>Используй фильтры, чтобы быстро найти нужные слова для английского и IT.</p>
         </div>
         <Button variant="soft" onClick={() => setStudyMode((value) => !value)}>
           <BookOpen size={15} />
           {studyMode ? 'Сетка слов' : 'Режим карточек'}
         </Button>
-      </div>
-
-      <div className="dictionary-levels" aria-label="Уровень словаря">
-        <button className={level === 'all' ? 'active' : ''} onClick={() => selectLevel('all')} type="button">
-          <strong>Все</strong><small>{dictionary.length}</small>
-        </button>
-        {levels.map((item) => (
-          <button className={level === item ? 'active' : ''} onClick={() => selectLevel(item)} type="button" key={item}>
-            <strong>{item}</strong><small>{levelCounts[item] || 0} слов</small>
-          </button>
-        ))}
-      </div>
-
-      <div className="dictionary-topic-strip">
-        <span><Layers3 size={14} /> Темы</span>
-        <div>
-          <button className={topic === 'all' ? 'active' : ''} onClick={() => selectTopic('all')} type="button">Все темы</button>
-          {topics.map((item) => (
-            <button className={topic === item ? 'active' : ''} onClick={() => selectTopic(item)} type="button" key={item}>
-              {item}
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="search-box">
@@ -115,17 +87,37 @@ export const DictionaryPanel = () => {
         />
       </div>
 
-      <div className="filter-row">
-        <div className="segmented">
-          {(['all', 'general', 'it'] as const).map((value) => (
-            <button className={category === value ? 'active' : ''} onClick={() => { setCategory(value); reset(); }} key={value} type="button">
-              {value === 'all' ? 'Все' : value === 'general' ? 'Разговорный' : 'IT & работа'}
-            </button>
-          ))}
-        </div>
-        <div className="dictionary-filter-note">
-          <SlidersHorizontal size={13} />
-          {level === 'all' ? 'Все уровни' : `Уровень ${level}`} · {topic === 'all' ? 'Все темы' : topic}
+      <div className="dictionary-filters" aria-label="Фильтры словаря">
+        <label className="dictionary-filter">
+          <span>Уровень</span>
+          <select value={level} onChange={(event) => selectLevel(event.target.value as VocabularyLevel | 'all')}>
+            <option value="all">Все уровни</option>
+            {levels.map((item) => <option value={item} key={item}>{item} · {levelCounts[item] || 0} слов</option>)}
+          </select>
+        </label>
+
+        <label className="dictionary-filter">
+          <span>Направление</span>
+          <select value={category} onChange={(event) => { setCategory(event.target.value as VocabularyCategory | 'all'); reset(); }}>
+            <option value="all">Все направления</option>
+            <option value="general">Разговорный английский</option>
+            <option value="it">IT и работа</option>
+          </select>
+        </label>
+
+        <label className="dictionary-filter dictionary-filter-wide">
+          <span>Тема</span>
+          <select value={topic} onChange={(event) => selectTopic(event.target.value)}>
+            <option value="all">Все темы</option>
+            {[...new Set(dictionary.map((entry) => entry.topic || 'Основное'))].sort((a, b) => a.localeCompare(b, 'ru')).map((item) => (
+              <option value={item} key={item}>{item}</option>
+            ))}
+          </select>
+        </label>
+
+        <div className="dictionary-filter-count">
+          <SlidersHorizontal size={14} />
+          {filtered.length} слов
         </div>
       </div>
 
