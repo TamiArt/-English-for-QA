@@ -347,3 +347,270 @@
     font-size: 9px;
   }
 }
+
+
+/* Lesson card 2026 responsive rebuild */
+.roadmap { align-items: start; }
+.lesson-card { min-width: 0; }
+.lesson-card.expanded {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  grid-column: 1 / -1;
+  width: 100%;
+  max-height: none;
+  overflow: visible;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 18px 50px #17232b14;
+}
+.lesson-card.expanded .lesson-body { min-width: 0; }
+.lesson-card.expanded .lesson-detail {
+  min-width: 0;
+  max-width: 900px;
+  padding: 20px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.lesson-card.expanded .lesson-program-content {
+  max-width: 100%;
+  max-height: none;
+  overflow: visible;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.lesson-card.expanded .program-table-wrap {
+  max-width: 100%;
+  overflow: visible;
+}
+.lesson-card.expanded .program-table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+.lesson-card.expanded .lesson-actions {
+  align-self: end;
+}
+.lesson-detail > p,
+.lesson-detail > pre,
+.lesson-detail > .lesson-audio-grid,
+.lesson-detail > .lesson-examples,
+.lesson-detail > .program-table-wrap {
+  max-width: 100%;
+}
+.lesson-detail p,
+.lesson-detail strong,
+.lesson-detail span,
+.lesson-detail small,
+.lesson-detail td,
+.lesson-detail th {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.lesson-examples span,
+.lesson-examples small { white-space: normal; }
+.lesson-next { align-self: flex-end; }
+
+@media (max-width: 1050px) {
+  .roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lesson-card.expanded { grid-column: 1 / -1; }
+}
+
+@media (max-width: 720px) {
+  .main-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 14px 48px !important;
+    overflow-x: clip;
+  }
+  .roadmap {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  .module-heading {
+    width: 100%;
+    font-size: 18px !important;
+    line-height: 1.25;
+    margin: 22px 0 4px !important;
+  }
+  .lesson-card,
+  .lesson-card.expanded {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    grid-column: 1 / -1;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 11px;
+    padding: 16px !important;
+    border-radius: 16px;
+    overflow: visible !important;
+  }
+  .lesson-card.expanded {
+    box-shadow: 0 14px 38px #17232b12;
+  }
+  .lesson-number {
+    width: 34px !important;
+    height: 34px !important;
+    flex: 0 0 34px;
+    font-size: 11px !important;
+  }
+  .lesson-body {
+    min-width: 0;
+    width: 100%;
+  }
+  .lesson-meta {
+    min-width: 0;
+    font-size: 10px !important;
+    line-height: 1.3;
+  }
+  .lesson-body h3,
+  .lesson-card h3 {
+    max-width: 100%;
+    margin-top: 9px;
+    font-size: 18px !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.2px;
+    overflow-wrap: anywhere;
+  }
+  .lesson-body > p,
+  .lesson-card p {
+    max-width: 100%;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    overflow-wrap: anywhere;
+  }
+  .stars { margin-top: 11px; }
+  .lesson-actions {
+    align-self: end !important;
+    display: flex;
+    flex-direction: column;
+    gap: 7px !important;
+  }
+  .lesson-actions .button,
+  .lesson-expand {
+    width: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 8px !important;
+  }
+  .lesson-card.expanded .lesson-close {
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+  }
+  .lesson-card.expanded .lesson-detail {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 0 0;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+  }
+  .lesson-card.expanded .lesson-detail > p {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+  }
+  .lesson-card.expanded .lesson-detail strong {
+    display: block;
+    font-size: 15px !important;
+    line-height: 1.6;
+  }
+  .lesson-card.expanded .lesson-program-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 14px 0;
+    padding: 15px !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    overflow: visible !important;
+    white-space: pre-wrap;
+  }
+  .lesson-card.expanded .program-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 !important;
+    border: 0;
+    overflow: hidden !important;
+  }
+  .lesson-card.expanded .program-table {
+    width: 100%;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    font-size: 12px !important;
+    line-height: 1.5;
+  }
+  .lesson-card.expanded .program-table th,
+  .lesson-card.expanded .program-table td {
+    padding: 10px 8px !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .lesson-card.expanded .lesson-audio-grid {
+    width: 100%;
+    padding: 14px;
+  }
+  .lesson-card.expanded .lesson-audio-grid > div {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .lesson-card.expanded .lesson-audio-item {
+    min-width: 0;
+    width: 100%;
+    padding: 9px !important;
+    font-size: 12px !important;
+  }
+  .lesson-card.expanded .lesson-examples {
+    width: 100%;
+  }
+  .lesson-card.expanded .lesson-examples span {
+    font-size: 14px !important;
+    line-height: 1.55;
+  }
+  .lesson-card.expanded .lesson-examples small {
+    font-size: 12px !important;
+    line-height: 1.55;
+  }
+  .lesson-next {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .main-content { padding-left: 12px !important; padding-right: 12px !important; }
+  .lesson-card,
+  .lesson-card.expanded {
+    grid-template-columns: 30px minmax(0, 1fr) 36px;
+    gap: 9px;
+    padding: 13px !important;
+  }
+  .lesson-number {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .lesson-body h3,
+  .lesson-card h3 { font-size: 17px !important; }
+  .lesson-card.expanded .lesson-detail,
+  .lesson-card.expanded .lesson-detail > p { font-size: 14px !important; }
+  .lesson-card.expanded .lesson-program-content { font-size: 13px !important; }
+  .lesson-card.expanded .lesson-audio-grid > div { grid-template-columns: 1fr; }
+  .lesson-card.expanded .program-table { font-size: 11px !important; }
+}
