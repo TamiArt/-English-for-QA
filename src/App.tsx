@@ -57,6 +57,7 @@ export default function App() {
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const breadcrumb = active === 'Мой путь' ? 'Мой путь' : active;
   const showDictionary = active === 'Словарь';
   const showProgram = active === 'Программа';
 
