@@ -76,3 +76,242 @@
     transition: none;
   }
 }
+
+
+/* Mobile navigation and dictionary learning UI */
+@media (max-width: 720px) {
+  .sidebar {
+    background: #ffffff !important;
+    border-right: 1px solid #dfe5df;
+    box-shadow: 18px 0 55px #17232b35;
+    opacity: 1;
+  }
+
+  .sidebar nav button,
+  .sidebar-bottom > button {
+    color: #526068;
+  }
+
+  .sidebar nav button.active,
+  .sidebar nav button:hover {
+    color: var(--blue);
+    background: #edf2ff;
+  }
+
+  .mobile-menu-backdrop {
+    background: #17232b66;
+    backdrop-filter: blur(3px);
+  }
+}
+
+.dictionary-learning-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin: 22px 0 14px;
+  padding: 18px;
+  border: 1px solid #e1e6e1;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffffff, #f1f5ff);
+}
+
+.dictionary-learning-head > div:first-child {
+  min-width: 0;
+}
+
+.dictionary-kicker {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--coral);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.dictionary-learning-head h3 {
+  margin: 0 0 5px;
+  color: var(--ink);
+  font: 700 17px 'Space Grotesk';
+}
+
+.dictionary-learning-head p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.dictionary-levels {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.dictionary-levels button {
+  display: grid;
+  gap: 3px;
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-align: left;
+  color: var(--muted);
+  background: #fff;
+}
+
+.dictionary-levels button strong {
+  color: var(--ink);
+  font: 800 13px 'Space Grotesk';
+}
+
+.dictionary-levels button small {
+  font-size: 8px;
+}
+
+.dictionary-levels button.active {
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: 0 7px 15px #396bdc26;
+}
+
+.dictionary-levels button.active strong {
+  color: #fff;
+}
+
+.dictionary-topic-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.dictionary-topic-strip > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding-top: 7px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.dictionary-topic-strip > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dictionary-topic-strip button {
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #748087;
+  background: #fff;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.dictionary-topic-strip button.active {
+  color: var(--ink);
+  border-color: #bdcdf5;
+  background: #edf2ff;
+}
+
+.dictionary-filter-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.dictionary-study-card {
+  padding: 14px;
+  border: 1px solid #dce4f7;
+  border-radius: 15px;
+  background: #f8faff;
+}
+
+.dictionary-study-card .word-card {
+  max-width: 620px;
+  margin: 0 auto;
+  box-shadow: 0 12px 30px #17232b0b;
+}
+
+.dictionary-study-top,
+.dictionary-study-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.dictionary-study-top {
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.dictionary-study-nav {
+  max-width: 620px;
+  margin: 12px auto 0;
+}
+
+@media (max-width: 720px) {
+  .dictionary-learning-head {
+    display: block;
+    padding: 15px;
+  }
+
+  .dictionary-learning-head .button {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .dictionary-levels {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 3px;
+  }
+
+  .dictionary-levels button {
+    min-width: 82px;
+    flex: 0 0 82px;
+  }
+
+  .dictionary-topic-strip {
+    display: block;
+  }
+
+  .dictionary-topic-strip > span {
+    margin-bottom: 7px;
+  }
+
+  .dictionary-topic-strip > div {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 3px;
+  }
+
+  .dictionary-topic-strip button {
+    flex: 0 0 auto;
+  }
+
+  .dictionary-filter-note {
+    width: 100%;
+  }
+
+  .dictionary-study-card {
+    padding: 9px;
+  }
+
+  .dictionary-study-nav .button {
+    padding: 8px 9px;
+    font-size: 9px;
+  }
+}
