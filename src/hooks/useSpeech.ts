@@ -22,6 +22,19 @@ const femaleVoiceScore = (voice: SpeechSynthesisVoice, lang: string) => {
   return score;
 };
 
+const letterSpeech: Record<string, string> = {
+  A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
+  I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
+  Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
+  X: 'ex', Y: 'why', Z: 'zed',
+};
+
+const normalizeSpeechText = (text: string) => {
+  const value = text.trim();
+  if (/^[A-Z]$/.test(value)) return letterSpeech[value];
+  return text;
+};
+
 const selectVoice = (voices: SpeechSynthesisVoice[], lang: string) =>
   [...voices]
     .map((voice) => ({ voice, score: femaleVoiceScore(voice, lang) }))
@@ -49,7 +62,8 @@ export const useSpeech = () => {
   }, []);
 
   const speak = useCallback((text: string, lang = 'en-GB') => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text.trim()) {
+    const speechText = normalizeSpeechText(text);
+    if (typeof window === 'undefined' || !('speechSynthesis' in window) || !speechText.trim()) {
       return;
     }
 
@@ -68,7 +82,7 @@ export const useSpeech = () => {
 
       if (speechIdRef.current !== speechId) return;
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.lang = lang;
       utterance.rate = 0.82;
       utterance.pitch = 1.03;
