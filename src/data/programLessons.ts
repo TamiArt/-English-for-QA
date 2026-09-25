@@ -216,4 +216,4 @@ const foundationLessons: Lesson[] = [
   },
 ];
 
-export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...foundationLessons, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1, explanation: index === 3 ? pronounsLesson.explanation : getTheory(lesson.title, index) }));
+export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...foundationLessons, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1 }));
