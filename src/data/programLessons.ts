@@ -32,31 +32,32 @@ const getLevel = (content: string): string => {
 
 const getCaption = (content: string) => content.split(/\r?\n/).map((line) => line.trim()).find((line) => line.length > 15) || 'Полный конспект темы';
 
-const theoryByCard = [
-  'Суть: в английском 26 букв, но букв и звуков нельзя сравнивать один к одному. Название буквы A — [eɪ] («эй»), а звук в слове cat — [æ]. Поэтому сначала учим название буквы, затем её частые звуки и сочетания. Это нормальная особенность английского, а не ошибка.',
-  'Суть: закрытый слог обычно даёт короткий гласный звук: cat, pen, sit. Открытый слог и немая e часто дают звук, похожий на название буквы: go, make, hide. Частые сочетания тоже нужно узнавать целиком: sh = «ш», ch = «ч», th = [θ]/[ð], ee = «и». Правила помогают читать новые слова, но у английского есть исключения — их лучше сразу слушать.',
-  'Суть: учим не отдельные слова, а маленькие готовые блоки. a big house = большой дом, work from home = работать из дома, make a mistake = совершить ошибку. Прилагательное обычно стоит перед существительным: a new phone. Запоминай слово вместе с типичным соседом — так B2 будет строиться намного легче.',
-  'Суть: местоимение показывает, кто делает действие и на кого оно направлено. Subject: I, you, he, she, it, we, they. Object: me, you, him, her, it, us, them. Possessive: my, your, his, her, its, our, their. Сравни: She helps me — она помогает мне; This is my laptop — это мой ноутбук.',
-  'Суть: Simple выбираем, когда важен факт, привычка или завершённое событие, а не процесс. Present: I work / She works. Past: I worked / I went. Future: I will work. В Present вопрос/отрицание используют do/does, в Past — did. После do/does/did главный глагол всегда V1: Does she work? Did she work?',
-  'Суть: базовый порядок — Subject + Verb + Object + Place + Time. I bought a phone yesterday. Если это состояние, профессия или место, нужен to be: I am tired. She is a tester. Are you ready? — вопрос с to be. Если есть обычный глагол, вопрос строится иначе: Do you work?',
-  'Суть: слово должно сразу превращаться в фразу. Для каждого слова учи: перевод + IPA + русское приближение произношения + типичное сочетание + короткое предложение. Например: requirement — требование; meet a requirement — соответствовать требованию; The feature meets the requirement.',
-  'Суть: части речи — это роли слов. Noun называет объект или идею; verb показывает действие/состояние; adjective описывает noun; adverb описывает действие; pronoun заменяет noun; preposition связывает слова; conjunction соединяет идеи. Отдельно запомни articles a/an/the и determiners this, that, some, any — они помогают понять, о каком количестве или предмете мы говорим.',
-  'Суть: Continuous — это «камера»: мы смотрим на действие в процессе. I am testing now. At 5 yesterday, I was testing. At 5 tomorrow, I will be testing. Формула всех трёх форм: to be + V-ing. Сравни I test every day — привычка и I am testing now — процесс.',
-  "Суть: сначала выбери точку времени, затем форму to be. Present: am/is/are + V-ing. Past: was/were + V-ing. Future: will be + V-ing. Отрицание: am not / isn't / aren't + V-ing. Вопрос: Am/Is/Are + subject + V-ing? Для Past — Was/Were, для Future — Will + subject + be + V-ing.",
-  'Суть: stative verbs называют состояние, а не действие в процессе: know, believe, understand, want, need, own, belong, remember. Обычно говорим I know, I understand, I want. Но некоторые слова меняют смысл: I think it is good — я считаю; I am thinking about it — я сейчас обдумываю.',
-  'Суть: action verbs называют действия: test, write, build, run, read. Они легко работают в Continuous: I am testing. Если действие повторяется как привычка — I test every day. Если происходит прямо сейчас — I am testing now.',
-  'Суть: один и тот же глагол иногда меняет грамматику вместе со смыслом. I think you are right — мнение. I am thinking about the problem — процесс размышления. I have a car — владение. I am having lunch — действие. Поэтому сначала определяй смысл, потом выбирай Simple или Continuous.',
-  'Суть: Perfect отвечает на вопрос «что уже произошло к моменту отсчёта?». Present Perfect: have/has + V3 — результат важен сейчас. Past Perfect: had + V3 — одно прошлое раньше другого. Future Perfect: will have + V3 — результат будет готов к сроку. V3 — третья форма глагола: worked, gone, written, seen.',
-  'Суть: Perfect Continuous = длительность процесса до точки отсчёта. Present: have/has been + V-ing; Past: had been + V-ing; Future: will have been + V-ing. For показывает период: for two hours. Since показывает начало: since Monday. Сравни: I have tested it — результат; I have been testing it for two hours — длительность.',
-  'Суть: модальные глаголы выражают отношение к действию — возможность, необходимость, разрешение или совет. После большинства модальных глаголов смысловой глагол ставится без to: can swim, must stop, should rest.',
-  'Can / Could выражают способность или возможность: I can swim. Must — строгая обязанность: You must stop. Should — совет: You should rest. May / Might — вероятность или вежливое разрешение: It may rain; May I come in?',
-  'Суть: conditionals с if состоят из условия и результата. Zero: If + Present, Present — факты. First: If + Present, will + V — реальное будущее. Second: If + Past, would + V — нереальное настоящее или мечта. Third: If + Past Perfect, would have + V3 — сожаление о прошлом.',
-  'Суть: reporting verbs передают чужие слова, мысли и косвенную речь. Если главное предложение в прошлом, действует Sequence of Tenses — сдвиг времён назад. Основные глаголы: say [seɪ], tell, explain, agree, deny, suggest. Пример: He said he was tired.',
-  'Суть: Complex Object и Complex Subject сокращают предложения. Complex Object: глагол + объект + инфинитив — I expect him to come. Complex Subject: субъект + пассивный глагол + инфинитив — He is expected to arrive.',
-  'Суть: выбираем между V-ing и to + V после определённых глаголов. Герундий используется после предлогов и enjoy, finish, avoid, suggest: enjoy reading. Инфинитив используется после want, decide, hope, promise: I decided to learn.',
+const theoryByTopic = [
+  { match: /Шаг 1\./i, text: 'Главное: сначала запомни названия 26 букв, затем учись видеть их звуки внутри слов. Название буквы и звук буквы — не одно и то же: A = [eɪ], а в cat буква a даёт [æ].' },
+  { match: /Шаг 2\./i, text: 'Главное: читай слово по частям — открытый слог, закрытый слог и частые сочетания букв. Эти правила дают основу чтения, но исключения лучше запоминать вместе с озвучкой.' },
+  { match: /Шаг 3\./i, text: 'Главное: начинаем строить словарный запас маленькими блоками: местоимение + слово, прилагательное + существительное, готовое словосочетание. Не учи слово изолированно.' },
+  { match: /Шаг 4\./i, text: 'Главное: Simple описывает факт, привычку или событие как целое. Для Present используются do/does, для Past — did, а Future строится с will. После do, does и did основной глагол остаётся в форме V1.' },
+  { match: /Шаг 5\./i, text: 'Главное: английское предложение требует понятного порядка слов. Базовая схема: Subject + Verb + Object. Если действия нет и мы описываем состояние, профессию или место, используем to be: I am at home. She is a tester.' },
+  { match: /Шаг 6\./i, text: 'Главное: эта тема расширяет базовый словарь словами о доме, работе, времени, погоде и состояниях. Учи каждое слово вместе с переводом, транскрипцией и коротким примером.' },
+  { match: /Части речи/i, text: 'Главное: каждое слово выполняет роль в предложении. Noun называет предмет или идею, verb — действие или состояние, adjective — признак, pronoun — заменяет существительное. Остальные части речи помогают связывать и уточнять смысл.' },
+  { match: /Continuous/i, text: 'Главное: Continuous показывает процесс в определённый момент. Основа одна: форма to be + V-ing. Меняется только время: am/is/are, was/were или will be.' },
+  { match: /Глаголы состояния/i, text: 'Главное: stative verbs описывают состояние, мнение, чувство или владение, поэтому обычно используются в Simple: I know, I want, I understand. Не ставь их автоматически в Continuous.' },
+  { match: /Глаголы действия/i, text: 'Главное: action verbs называют реальные действия: test, write, build, read. Для процесса они легко переходят в Continuous: I am testing. Для привычки — в Simple: I test every day.' },
+  { match: /Глаголы конструкции/i, text: 'Главное: некоторые глаголы меняют грамматическую конструкцию вместе со смыслом. Сначала определи, что именно означает глагол в контексте, и только потом выбирай Simple или Continuous.' },
+  { match: /Perfect Continuous/i, text: 'Главное: Perfect Continuous показывает длительность процесса до определённого момента. Основа: have/has/had/will have + been + V-ing. For показывает длительность, since — момент начала.' },
+  { match: /Perfect/i, text: 'Главное: Perfect связывает прошлое действие с точкой отсчёта или результатом. Основа: have/has/had/will have + V3. Важно не просто «когда произошло», а что уже получено к нужному моменту.' },
+  { match: /Модальные глаголы/i, text: 'Главное: модальные глаголы показывают возможность, необходимость, совет, разрешение или вероятность. После can, could, must, should, may и might основной глагол обычно идёт без to.' },
+  { match: /Модальные слова/i, text: 'Главное: эти конструкции помогают уточнить степень уверенности и отношение говорящего к действию — от уверенного утверждения до предположения или вежливой просьбы.' },
+  { match: /Условное предложение/i, text: 'Главное: условное предложение состоит из условия и результата. Тип выбирай по смыслу: факт, реальная возможность, нереальная ситуация сейчас или сожаление о прошлом.' },
+  { match: /Глаголы речи/i, text: 'Главное: reported speech передаёт чужие слова или мысли не дословно. Обрати внимание на say, tell, explain и на изменение времени, местоимений и указателей времени.' },
+  { match: /Глаголы конструкции/i, text: 'Главное: Complex Object и Complex Subject позволяют компактно соединить действие, объект и инфинитив. Сначала распознай конструкцию, затем проверь форму глагола после объекта или пассивной конструкции.' },
+  { match: /Глаголы герундия/i, text: 'Главное: после разных глаголов используется либо V-ing, либо to + V. Учи управление целиком: enjoy reading, avoid making, want to learn, decide to test.' },
 ];
 
-const getTheory = (title: string, index: number) => theoryByCard[index] || (title.includes('Финальная') ? 'Грамматика курса выстроена от фундамента A0-A1 к свободной речи B2. Закрепляй результат регулярным чтением, слушанием и говорением.' : 'Изучи ключевое правило, формулу и примеры темы.');
+const getTheory = (title: string) => {
+  const match = theoryByTopic.find((item) => item.match.test(title));
+  return match?.text || 'Главное: изучи правило, затем прочитай примеры и проговори их вслух. Теория должна помогать понять именно эту тему, а не повторять материал соседнего модуля.';
+};
 
 const alphabetSpeech: Record<string, string> = {
   A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
@@ -93,7 +94,7 @@ const parsedLessons: Lesson[] = parseProgram(lessonSource).map((section, index) 
   duration: `${Math.max(12, Math.min(35, Math.round(section.content.length / 180)))} мин`,
   accent: accents[index % accents.length],
   module: index < 6 ? 'Старт · программа' : index < 11 ? 'Грамматический фундамент' : 'Продвинутые конструкции',
-  explanation: getTheory(section.title, index),
+  explanation: getTheory(section.title),
   formula: 'Открой карточку, чтобы изучить правило, таблицы, примеры и лексику.',
   examples: [],
   practice: 'Пройди весь материал темы и проговори примеры вслух.',
