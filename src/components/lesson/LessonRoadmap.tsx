@@ -1,5 +1,5 @@
-import { BookOpen, Check, ChevronDown, Lock, Play, Star, X } from 'lucide-react';
-import { Fragment, useEffect, useState } from 'react';
+import { BookOpen, Check, ChevronDown, ChevronRight, Lock, Play, Star, X } from 'lucide-react';
+import { Fragment, useState } from 'react';
 import type { Lesson } from '../../data/lessons';
 import { useSpeech } from '../../hooks/useSpeech';
 import { Badge3D } from '../ui/Badge3D';
@@ -20,6 +20,8 @@ type LessonCardProps = {
   expanded: boolean;
   onToggleExpanded: () => void;
   onComplete: () => void;
+  onNext: () => void;
+  hasNext: boolean;
 };
 
 const LessonCard = ({
@@ -29,6 +31,8 @@ const LessonCard = ({
   expanded,
   onToggleExpanded,
   onComplete,
+  onNext,
+  hasNext,
 }: LessonCardProps) => {
   const { speak, stop, isPlaying, playingText } = useSpeech();
   const cardTable = lesson.programContent
@@ -154,6 +158,12 @@ const LessonCard = ({
               <p>
                 <b>Подсказка:</b> {lesson.tip}
               </p>
+
+              {hasNext && (
+                <button className="lesson-next" type="button" onClick={onNext}>
+                  Следующий модуль <ChevronRight size={16} />
+                </button>
+              )}
             </div>
           </>
         )}
@@ -207,17 +217,6 @@ export const LessonRoadmap = ({
 }: LessonRoadmapProps) => {
   const [openLesson, setOpenLesson] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (openLesson === null) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [openLesson]);
-
   return (
     <div className="roadmap">
       {lessons.map((lesson, index) => {
@@ -246,6 +245,11 @@ export const LessonRoadmap = ({
                 setOpenLesson(expanded ? null : lesson.id)
               }
               onComplete={() => onComplete(lesson.id)}
+              onNext={() => {
+                const nextLesson = lessons[index + 1];
+                if (nextLesson) setOpenLesson(nextLesson.id);
+              }}
+              hasNext={index < lessons.length - 1}
             />
           </Fragment>
         );

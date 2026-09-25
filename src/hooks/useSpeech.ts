@@ -7,6 +7,40 @@ const stopSpeech = () => {
   window.speechSynthesis.cancel();
 };
 
+const femaleVoiceScore = (voice: SpeechSynthesisVoice, lang: string) => {
+  const name = voice.name.toLowerCase();
+  const voiceLang = voice.lang.toLowerCase();
+  const target = lang.toLowerCase();
+
+  if (voiceLang !== target && !voiceLang.startsWith(target.split('-')[0])) return -100;
+
+  let score = voiceLang === target ? 30 : 10;
+  if (/female|woman|girl|hazel|zira|samantha|susan|karen|sara|serena|ava|aria|jenny|libby|google uk english female|google us english female/i.test(name)) score += 100;
+  if (/male|man|daniel|david|mark|george|guy|alex/i.test(name)) score -= 40;
+  if (/natural|online|premium|enhanced|google|microsoft/i.test(name)) score += 15;
+
+  return score;
+};
+
+const letterSpeech: Record<string, string> = {
+  A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
+  I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
+  Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
+  X: 'ex', Y: 'why', Z: 'zed',
+};
+
+const normalizeSpeechText = (text: string) => {
+  const value = text.trim();
+  if (/^[A-Z]$/.test(value)) return letterSpeech[value];
+  return text;
+};
+
+const selectVoice = (voices: SpeechSynthesisVoice[], lang: string) =>
+  [...voices]
+    .map((voice) => ({ voice, score: femaleVoiceScore(voice, lang) }))
+    .filter((item) => item.score >= 0)
+    .sort((a, b) => b.score - a.score)[0]?.voice ?? null;
+
 export const useSpeech = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [playingText, setPlayingText] = useState('');
@@ -27,8 +61,9 @@ export const useSpeech = () => {
     setPlayingText('');
   }, []);
 
-  const speak = useCallback((text: string, lang = 'en-US') => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window) || !text.trim()) {
+  const speak = useCallback((text: string, lang = 'en-GB') => {
+    const speechText = normalizeSpeechText(text);
+    if (typeof window === 'undefined' || !('speechSynthesis' in window) || !speechText.trim()) {
       return;
     }
 
@@ -40,8 +75,6 @@ export const useSpeech = () => {
       window.clearTimeout(timeoutRef.current);
     }
 
-    // Cancel first, then schedule a fresh utterance. This avoids a Chromium
-    // speechSynthesis race where a cancelled utterance can be spoken twice.
     stopSpeech();
 
     timeoutRef.current = window.setTimeout(() => {
@@ -49,21 +82,13 @@ export const useSpeech = () => {
 
       if (speechIdRef.current !== speechId) return;
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.lang = lang;
-      utterance.rate = 0.85;
-      utterance.pitch = 1;
+      utterance.rate = 0.82;
+      utterance.pitch = 1.03;
 
       const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find(
-        (voice) =>
-          voice.lang.toLowerCase() === lang.toLowerCase() &&
-          /google|microsoft|natural|premium/i.test(voice.name),
-      );
-      const fallbackVoice = voices.find((voice) =>
-        voice.lang.toLowerCase().startsWith(lang.split('-')[0].toLowerCase()),
-      );
-      utterance.voice = preferredVoice ?? fallbackVoice ?? null;
+      utterance.voice = selectVoice(voices, lang);
 
       utterance.onstart = () => {
         if (speechIdRef.current !== speechId) return;
@@ -91,6 +116,7 @@ export const useSpeech = () => {
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
     }
+    stopSpeech();
   }, []);
 
   return { speak, stop, isPlaying, playingText };
