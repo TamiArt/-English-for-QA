@@ -1,17 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
+const DashboardPanel = lazy(() => import('./components/dashboard/DashboardPanel').then((module) => ({ default: module.DashboardPanel })));
 const DictionaryPanel = lazy(() => import('./components/vocabulary/DictionaryPanel').then((module) => ({ default: module.DictionaryPanel })));
 const AccountPanel = lazy(() => import('./components/account/AccountPanel').then((module) => ({ default: module.AccountPanel })));
 const LessonProgramPanel = lazy(() => import('./components/lesson/LessonProgramPanel').then((module) => ({ default: module.LessonProgramPanel })));
 import type { ReactNode } from 'react';
-import { Hero } from './components/dashboard/Hero';
-import { PracticeSection } from './components/dashboard/PracticeSection';
-import { StatsRow } from './components/dashboard/StatsRow';
 import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
-import { LessonRoadmap } from './components/lesson/LessonRoadmap';
-import { Button } from './components/ui/Button';
-import { SectionHeading } from './components/ui/SectionHeading';
-import { programLessons } from './data/programLessons';
 import { useProgress } from './hooks/useProgress';
 import { useAccount } from './hooks/useAccount';
 import { useTelegram } from './hooks/useTelegram';
@@ -93,48 +87,16 @@ export default function App() {
             <LessonProgramPanel />
           </Suspense>
         ) : (
-          <>
-            <Hero
-              onContinue={() => scrollTo('Мой путь', 'roadmap')}
-            />
-
-            <StatsRow
+          <Suspense fallback={panelFallback('Загружаем обучение…')}>
+            <DashboardPanel
               streak={progress.streak}
               xp={progress.xp}
-              lessons={progress.completedLessons.length}
-              total={programLessons.length}
+              completedLessons={progress.completedLessons.length}
+              completedLessonIds={progress.completedLessons}
+              onComplete={completeLesson}
+              onContinue={() => scrollTo('Мой путь', 'roadmap')}
             />
-
-            <section
-              className="roadmap-section"
-              id="roadmap"
-            >
-              <SectionHeading
-                eyebrow="Блок 01 · Lessons & Practice"
-                title="Твой маршрут"
-                action={
-                  <span className="progress-label">
-                    {progress.completedLessons.length} из{' '}
-                    {programLessons.length} уроков
-                  </span>
-                }
-              />
-
-              <LessonRoadmap
-                lessons={programLessons}
-                completed={progress.completedLessons}
-                onComplete={completeLesson}
-              />
-            </section>
-
-            <PracticeSection />
-
-            <div className="footer-note">
-              <Button variant="ghost">
-                arTami · учимся говорить о важном
-              </Button>
-            </div>
-          </>
+          </Suspense>
         )}
       </main>
 
