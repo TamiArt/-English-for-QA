@@ -128,7 +128,6 @@ const LessonCard = ({
                       <SpeechButton
                         key={item.label}
                         label={item.label}
-                        text={item.text}
                         phonetic={item.phonetic}
                         isPlaying={playingText === item.text && isPlaying}
                         onToggle={() => handleSpeechToggle(item.text)}
