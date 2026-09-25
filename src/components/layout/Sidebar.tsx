@@ -33,7 +33,6 @@ export const Sidebar = ({
     <aside
       id="mobile-navigation"
       className={`sidebar ${mobileOpen ? 'mobile-open' : ''}`}
-      aria-hidden={!mobileOpen}
     >
       <div className="brand">
         <span className="brand-mark">a</span>
