@@ -614,3 +614,121 @@
   .lesson-card.expanded .lesson-audio-grid > div { grid-template-columns: 1fr; }
   .lesson-card.expanded .program-table { font-size: 11px !important; }
 }
+
+
+/* Dictionary filters: compact desktop + touch-friendly mobile */
+.dictionary-filters {
+  display: grid;
+  grid-template-columns: minmax(150px, .8fr) minmax(190px, 1fr) minmax(210px, 1.2fr) auto;
+  gap: 10px;
+  align-items: end;
+  margin: 18px 0 22px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+.dictionary-filter {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.dictionary-filter span {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+}
+.dictionary-filter select {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 0 34px 0 11px;
+  border: 1px solid #dfe5e1;
+  border-radius: 9px;
+  outline: none;
+  color: var(--ink);
+  background: #f9faf8;
+  font-size: 11px;
+  font-weight: 700;
+}
+.dictionary-filter select:focus {
+  border-color: #b8c8ee;
+  box-shadow: 0 0 0 3px #edf2ff;
+}
+.dictionary-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 40px;
+  padding: 0 11px;
+  border-radius: 9px;
+  color: var(--blue);
+  background: #edf2ff;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.dictionary-topic-strip,
+.dictionary-levels {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  .dictionary-panel {
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 30px;
+  }
+  .dictionary-learning-head {
+    margin-top: 16px;
+  }
+  .dictionary-filters {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin: 14px 0 18px;
+    padding: 11px;
+  }
+  .dictionary-filter-wide {
+    grid-column: 1 / -1;
+  }
+  .dictionary-filter select {
+    height: 44px;
+    font-size: 12px;
+  }
+  .dictionary-filter span {
+    font-size: 10px;
+  }
+  .dictionary-filter-count {
+    min-height: 44px;
+    font-size: 11px;
+  }
+  .dictionary-panel .search-box {
+    width: 100%;
+    max-width: none;
+    min-height: 44px;
+  }
+  .dictionary-panel .search-box input {
+    font-size: 13px;
+  }
+  .dictionary-grid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: 1fr !important;
+  }
+  .word-card {
+    width: 100%;
+    min-width: 0;
+  }
+}
+@media (max-width: 390px) {
+  .dictionary-filters {
+    grid-template-columns: 1fr;
+  }
+  .dictionary-filter-wide {
+    grid-column: auto;
+  }
+  .dictionary-filter-count {
+    width: 100%;
+  }
+}
