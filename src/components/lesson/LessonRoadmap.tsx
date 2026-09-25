@@ -1,5 +1,5 @@
 import { BookOpen, Check, ChevronDown, ChevronRight, Lock, Play, Star, X } from 'lucide-react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import type { Lesson } from '../../data/lessons';
 import { useSpeech } from '../../hooks/useSpeech';
 import { Badge3D } from '../ui/Badge3D';
@@ -216,17 +216,6 @@ export const LessonRoadmap = ({
   onComplete,
 }: LessonRoadmapProps) => {
   const [openLesson, setOpenLesson] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (openLesson === null) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [openLesson]);
 
   return (
     <div className="roadmap">
