@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DictionaryPanel } from './components/vocabulary/DictionaryPanel';
 import { AccountPanel } from './components/account/AccountPanel';
 import { Hero } from './components/dashboard/Hero';
@@ -17,13 +17,125 @@ import { useTelegram } from './hooks/useTelegram';
 
 export default function App() {
   useTelegram();
+
   const account = useAccount();
   const { progress, completeLesson } = useProgress(account.email);
+
   const [active, setActive] = useState('Обзор');
   const [accountOpen, setAccountOpen] = useState(false);
-  const scrollTo = (label: string, target: string) => { setActive(label); if (label === 'Словарь') return; document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' }); };
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
+  const scrollTo = (label: string, target: string) => {
+    setActive(label);
+    setMobileMenuOpen(false);
+
+    if (label === 'Словарь' || label === 'Программа') {
+      return;
+    }
+
+    document
+      .getElementById(target)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   const showDictionary = active === 'Словарь';
   const showProgram = active === 'Программа';
-  return <div className="app-shell" id="top"><Sidebar active={active} onNavigate={scrollTo} /><main className="main-content"><Topbar streak={progress.streak} email={account.email} onAccount={() => setAccountOpen(true)} />{showDictionary ? <DictionaryPanel /> : showProgram ? <LessonProgramPanel /> : <><Hero onContinue={() => scrollTo('Мой путь', 'roadmap')} /><StatsRow streak={progress.streak} xp={progress.xp} lessons={progress.completedLessons.length} total={programLessons.length} /><section className="roadmap-section" id="roadmap"><SectionHeading eyebrow="Блок 01 · Lessons & Practice" title="Твой маршрут" action={<span className="progress-label">{progress.completedLessons.length} из {programLessons.length} уроков</span>} /><LessonRoadmap lessons={programLessons} completed={progress.completedLessons} onComplete={completeLesson} /></section><PracticeSection /><div className="footer-note"><Button variant="ghost">arTami · учимся говорить о важном</Button></div></>}</main>{accountOpen && <AccountPanel email={account.email} onRegister={account.register} onLogout={account.logout} onClose={() => setAccountOpen(false)} />}</div>;
+
+  return (
+    <div className="app-shell" id="top">
+      <Sidebar
+        active={active}
+        onNavigate={scrollTo}
+        mobileOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+
+      <main className="main-content">
+        <Topbar
+          streak={progress.streak}
+          email={account.email}
+          onAccount={() => setAccountOpen(true)}
+          onMenu={() => setMobileMenuOpen((open) => !open)}
+          menuOpen={mobileMenuOpen}
+        />
+
+        {showDictionary ? (
+          <DictionaryPanel />
+        ) : showProgram ? (
+          <LessonProgramPanel />
+        ) : (
+          <>
+            <Hero
+              onContinue={() => scrollTo('Мой путь', 'roadmap')}
+            />
+
+            <StatsRow
+              streak={progress.streak}
+              xp={progress.xp}
+              lessons={progress.completedLessons.length}
+              total={programLessons.length}
+            />
+
+            <section
+              className="roadmap-section"
+              id="roadmap"
+            >
+              <SectionHeading
+                eyebrow="Блок 01 · Lessons & Practice"
+                title="Твой маршрут"
+                action={
+                  <span className="progress-label">
+                    {progress.completedLessons.length} из{' '}
+                    {programLessons.length} уроков
+                  </span>
+                }
+              />
+
+              <LessonRoadmap
+                lessons={programLessons}
+                completed={progress.completedLessons}
+                onComplete={completeLesson}
+              />
+            </section>
+
+            <PracticeSection />
+
+            <div className="footer-note">
+              <Button variant="ghost">
+                arTami · учимся говорить о важном
+              </Button>
+            </div>
+          </>
+        )}
+      </main>
+
+      {accountOpen && (
+        <AccountPanel
+          email={account.email}
+          onRegister={account.register}
+          onLogout={account.logout}
+          onClose={() => setAccountOpen(false)}
+        />
+      )}
+    </div>
+  );
 }
