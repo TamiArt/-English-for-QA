@@ -3,7 +3,6 @@ import type { MouseEventHandler } from 'react';
 
 type SpeechButtonProps = {
   label: string;
-  text: string;
   phonetic: string;
   isPlaying: boolean;
   onToggle: MouseEventHandler<HTMLButtonElement>;
@@ -11,7 +10,6 @@ type SpeechButtonProps = {
 
 export const SpeechButton = ({
   label,
-  text,
   phonetic,
   isPlaying,
   onToggle,
