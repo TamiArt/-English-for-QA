@@ -1,6 +1,7 @@
 import type { DictionaryEntry } from '../types';
 import dictionarySource from '../dictionary/dictA.txt?raw';
 import advancedDictionarySource from '../dictionary/dictB.txt?raw';
+import { extendedVocabulary } from './extendedVocabulary';
 
 const starterDictionary: DictionaryEntry[] = [
   { id: 1, word: 'Hello', ipa: 'həˈləʊ', translation: 'привет', phoneticRu: 'хэлОу', level: 'A1', category: 'general', examples: [{ en: 'Hello, my name is Alex.', ru: 'Привет, меня зовут Алекс.', phoneticRu: 'хэлОу, май нЭйм из Эликс' }] },
@@ -87,10 +88,11 @@ const importedDictionary = [
   ...parseDictionarySource(dictionarySource, 'A1'),
   ...parseDictionarySource(advancedDictionarySource, 'B1'),
 ];
-const existingWords = new Set(starterDictionary.map((entry) => normalize(entry.word)));
+const existingWords = new Set([...starterDictionary, ...extendedVocabulary].map((entry) => normalize(entry.word)));
 
 export const dictionary: DictionaryEntry[] = [
   ...starterDictionary,
+  ...extendedVocabulary,
   ...importedDictionary.filter((entry) => {
     const key = normalize(entry.word);
     if (existingWords.has(key)) return false;
