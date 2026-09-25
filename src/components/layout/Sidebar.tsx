@@ -53,6 +53,7 @@ export const Sidebar = ({
             className={active === label ? 'active' : ''}
             type="button"
             onClick={() => onNavigate(label, target)}
+            aria-current={active === label ? 'page' : undefined}
             key={label}
           >
             <Icon size={18} />
