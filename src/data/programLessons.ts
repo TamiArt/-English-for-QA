@@ -126,4 +126,94 @@ const pronounsLesson: Lesson = {
   programContent: `Личные местоимения (Subject Pronouns)\nI [aɪ] — я (ай)\nyou [juː] — ты / вы (ю)\nhe [hiː] — он (хи)\nshe [ʃiː] — она (ши)\nit [ɪt] — оно / это (ит)\nwe [wiː] — мы (уи)\nthey [ðeɪ] — они (зэй)\n\nОбъектные формы (Object Pronouns)\nme [miː] — меня / мне (ми)\nyou [juː] — тебя / вам (ю)\nhim [hɪm] — его / ему (хим)\nher [hɜː(r)] — её / ей (хёр)\nus [ʌs] — нас / нам (ас)\nthem [ðem] — их / им (зэм)\n\nПримеры\nShe helps me. [ʃiː helps miː] — Она помогает мне (ши хэлпс ми).\nThey know us. [ðeɪ nəʊ ʌs] — Они знают нас (зэй ноу ас).`,
 };
 
-export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1, explanation: index === 3 ? pronounsLesson.explanation : getTheory(lesson.title, index) }));
+
+
+const foundationLessons: Lesson[] = [
+  {
+    id: 100,
+    title: 'Артикли a / an / the',
+    caption: 'Как сказать «какой-то» и «конкретный»',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'gold',
+    module: 'Старт · программа',
+    explanation: 'Артикль стоит перед существительным и помогает понять, говорим ли мы об одном предмете вообще или о конкретном предмете. A используется перед согласным звуком: a tester. An — перед гласным звуком: an app. The — когда предмет уже известен или конкретен: the tester, the app we discussed.',
+    formula: 'a + согласный звук · an + гласный звук · the + конкретный предмет',
+    examples: [
+      { en: 'I need a laptop.', ru: 'Мне нужен ноутбук (любой подходящий).' },
+      { en: 'The laptop is on the desk.', ru: 'Этот ноутбук на столе (конкретный).' },
+    ],
+    practice: 'Вставь a, an или the в десять простых предложений о работе и доме.',
+    tip: 'Выбирай a/an по звуку, а не по букве: an hour, но a university.',
+  },
+  {
+    id: 101,
+    title: 'Множественное число и countable / uncountable',
+    caption: 'Один предмет, несколько предметов и неисчисляемые слова',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'blue',
+    module: 'Старт · программа',
+    explanation: 'Большинство исчисляемых существительных образуют множественное число через -s: test → tests. После -s, -sh, -ch, -x часто добавляется -es: box → boxes. Некоторые формы неправильные: child → children, person → people, man → men. Неисчисляемые слова обычно не получают -s: information, advice, software, equipment.',
+    formula: 'one test → two tests · much information · many tests',
+    examples: [
+      { en: 'I have two test cases.', ru: 'У меня два тест-кейса.' },
+      { en: 'We need more information.', ru: 'Нам нужно больше информации.' },
+    ],
+    practice: 'Раздели двадцать слов на countable и uncountable и составь по пять предложений.',
+    tip: 'Не говори informations или advices. Используй some information / a piece of advice.',
+  },
+  {
+    id: 102,
+    title: 'There is / There are и have / has',
+    caption: 'Как сказать, что что-то существует или принадлежит кому-то',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'mint',
+    module: 'Старт · программа',
+    explanation: 'There is/are сообщает, что где-то что-то есть: There is a bug in the app. There are three bugs. Have/has говорит о владении или наличии: I have a laptop. She has a task. Вопросы: Is there...? Are there...? Do you have...? Does she have...?',
+    formula: 'There is + one · There are + many · I/you/we/they have · he/she/it has',
+    examples: [
+      { en: 'There is a problem in production.', ru: 'В продакшене есть проблема.' },
+      { en: 'Does she have access?', ru: 'У неё есть доступ?' },
+    ],
+    practice: 'Опиши рабочий стол и тестовый проект через there is/are и have/has.',
+    tip: 'There is = «есть/находится», have = «имеет/у кого-то есть».',
+  },
+  {
+    id: 103,
+    title: 'Вопросы, отрицания и вспомогательные глаголы',
+    caption: 'Do, does, did, be, have и will',
+    level: 'A1',
+    duration: '22 мин',
+    accent: 'violet',
+    module: 'Старт · программа',
+    explanation: 'Английский часто строит вопрос с помощью вспомогательного глагола. Present Simple: Do you work? Does she work? Past Simple: Did you work? С to be: Are you ready? Was he there? Future: Will you test it? Present Perfect: Have you finished? В отрицании тот же помощник получает not: do not, does not, did not, is not, have not.',
+    formula: 'Do/Does + V1 · Did + V1 · Be + subject · Have/Has + V3 · Will + V1',
+    examples: [
+      { en: 'Did you test the fix?', ru: 'Ты протестировал исправление?' },
+      { en: 'Have you finished the report?', ru: 'Ты закончил отчёт?' },
+    ],
+    practice: 'Преврати десять утверждений в вопросы и отрицания.',
+    tip: 'Если в предложении уже есть am/is/are/was/were, do/does/did не добавляем.',
+  },
+  {
+    id: 104,
+    title: 'Предлоги, сравнение и частые неправильные глаголы',
+    caption: 'Маленькие слова, которые сильно меняют смысл',
+    level: 'A2',
+    duration: '24 мин',
+    accent: 'coral',
+    module: 'Грамматический фундамент',
+    explanation: 'Предлоги лучше учить в готовых сочетаниях: work on a project, work at a company, work from home, interested in testing, responsible for QA. Для сравнения: faster than, more reliable than, the most useful. Неправильные глаголы нельзя строить через -ed: go → went → gone, write → wrote → written, find → found → found.',
+    formula: 'work on · responsible for · interested in · -er + than · more + adjective + than',
+    examples: [
+      { en: 'This tool is more reliable than the old one.', ru: 'Этот инструмент надёжнее старого.' },
+      { en: 'I am responsible for regression testing.', ru: 'Я отвечаю за регрессионное тестирование.' },
+    ],
+    practice: 'Выучи десять неправильных глаголов в трёх формах и составь пять сравнений.',
+    tip: 'Учи предлог вместе со словом: depend on, look for, listen to, wait for.',
+  },
+];
+
+export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...foundationLessons, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1, explanation: index === 3 ? pronounsLesson.explanation : getTheory(lesson.title, index) }));
