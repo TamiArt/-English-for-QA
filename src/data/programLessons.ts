@@ -33,21 +33,21 @@ const getLevel = (content: string): string => {
 const getCaption = (content: string) => content.split(/\r?\n/).map((line) => line.trim()).find((line) => line.length > 15) || 'Полный конспект темы';
 
 const theoryByCard = [
-  'Суть: фундамент языка — 26 букв (6 гласных и 20 согласных). Главное правило: буквы и звуки в английском не совпадают. Одна буква может читаться по-разному в зависимости от типа слога. Пример: A читается как [æ] в cat (кошка), но как [eɪ] в make (делать).',
-  'Суть: чтение гласных зависит от типа слога. Открытый слог заканчивается на гласную или немую e, поэтому гласная читается как в алфавите: make [meɪk], hide [haɪd], go [ɡəʊ]. Закрытый слог заканчивается на согласную, поэтому гласная читается кратко: cat [kæt], pen [pen], sit [sɪt].',
-  'Суть: формирование первого словарного запаса из частых существительных, прилагательных и базовых фраз. Базовые конструкции: Good morning / Hello — приветствие; Thank you / Please — вежливость; a big house, a new car — прилагательное стоит перед существительным.',
-  'Суть: местоимения заменяют имена и предметы, чтобы избегать повторов. Субъектные: I (я), you (ты/вы), he (он), she (она), it (оно/предмет/животное), we (мы), they (они). Объектные: me (мне/меня), him (ему), her (ей), us (нам), them (им). Пример: She sees me — Она видит меня.',
-  'Суть: Simple передаёт регулярные действия, привычки и постоянные факты. Present Simple: V / V-s для he, she, it; do/does в вопросах и отрицаниях. Past Simple: V2 или V-ed; did в вопросах и отрицаниях. Future Simple: will + V. Примеры: I work / She works; Did you work?; I will work.',
-  'Суть: английский использует строгий прямой порядок слов. Схема: Кто/что (подлежащее) + что делает (сказуемое) + кого/что (дополнение) + где/когда (обстоятельство). Пример: I bought a phone yesterday — Я купил телефон вчера.',
-  'Суть: накопление фундаментального словарного запаса: глаголы движения, предметы быта и описательные прилагательные. Учим слово вместе с транскрипцией, чтением, переводом и короткой фразой, чтобы сразу использовать его в речи.',
-  'Суть: предложение строится из 8 частей речи: Noun — существительное (cat, city); Verb — глагол (run, think); Adjective — прилагательное (red, big); Adverb — наречие (quickly, well); Pronoun — местоимение (he, it); Preposition — предлог (in, on, at); Conjunction — союз (and, but); Interjection — междометие (oh, wow).',
-  'Суть: Continuous описывает процесс в конкретный момент — сейчас, в определённый момент прошлого или будущего. Главный принцип: действие ещё не завершено в выбранной точке времени.',
-  'Суть: общая формула Continuous — to be + V-ing. Present: am/is/are + V-ing — I am reading now. Past: was/were + V-ing — I was reading at 5 PM yesterday. Future: will be + V-ing — I will be reading tomorrow at 5 PM.',
-  'Суть: stative verbs описывают чувства, мысли, владение и восприятие, а не физическое действие. Они обычно не употребляются в Continuous, поэтому используется Simple: I know this, а не I am knowing. Основные глаголы: love, hate, know, understand, believe, want, remember, have в значении владения.',
-  'Суть: action verbs обозначают физические и динамические действия, у которых есть начало и конец. Они могут употребляться во всех временах, включая Continuous: read, run, cook, build, write. Пример: I am reading now.',
-  'Суть: некоторые глаголы могут быть и stative, и action, но с разным смыслом. I think it is good — состояние, моё мнение. I am thinking about the test — действие, я обдумываю это прямо сейчас.',
-  'Суть: Perfect описывает действие, завершённое к определённому моменту, когда важен результат. Формула: have / has / had + V3. Present Perfect связан с настоящим: I have lost my key. Past Perfect произошло раньше другого прошлого события: He had left before I came. Future Perfect завершится к моменту в будущем: I will have finished by 5 PM.',
-  'Суть: Perfect Continuous описывает процесс, который начался раньше и длится до определённого момента; акцент на продолжительности. Формула: have / has / had + been + V-ing. Пример: I have been working here for 5 years.',
+  'Суть: в английском 26 букв, но букв и звуков нельзя сравнивать один к одному. Название буквы A — [eɪ] («эй»), а звук в слове cat — [æ]. Поэтому сначала учим название буквы, затем её частые звуки и сочетания. Это нормальная особенность английского, а не ошибка.',
+  'Суть: закрытый слог обычно даёт короткий гласный звук: cat, pen, sit. Открытый слог и немая e часто дают звук, похожий на название буквы: go, make, hide. Частые сочетания тоже нужно узнавать целиком: sh = «ш», ch = «ч», th = [θ]/[ð], ee = «и». Правила помогают читать новые слова, но у английского есть исключения — их лучше сразу слушать.',
+  'Суть: учим не отдельные слова, а маленькие готовые блоки. a big house = большой дом, work from home = работать из дома, make a mistake = совершить ошибку. Прилагательное обычно стоит перед существительным: a new phone. Запоминай слово вместе с типичным соседом — так B2 будет строиться намного легче.',
+  'Суть: местоимение показывает, кто делает действие и на кого оно направлено. Subject: I, you, he, she, it, we, they. Object: me, you, him, her, it, us, them. Possessive: my, your, his, her, its, our, their. Сравни: She helps me — она помогает мне; This is my laptop — это мой ноутбук.',
+  'Суть: Simple выбираем, когда важен факт, привычка или завершённое событие, а не процесс. Present: I work / She works. Past: I worked / I went. Future: I will work. В Present вопрос/отрицание используют do/does, в Past — did. После do/does/did главный глагол всегда V1: Does she work? Did she work?',
+  'Суть: базовый порядок — Subject + Verb + Object + Place + Time. I bought a phone yesterday. Если это состояние, профессия или место, нужен to be: I am tired. She is a tester. Are you ready? — вопрос с to be. Если есть обычный глагол, вопрос строится иначе: Do you work?',
+  'Суть: слово должно сразу превращаться в фразу. Для каждого слова учи: перевод + IPA + русское приближение произношения + типичное сочетание + короткое предложение. Например: requirement — требование; meet a requirement — соответствовать требованию; The feature meets the requirement.',
+  'Суть: части речи — это роли слов. Noun называет объект или идею; verb показывает действие/состояние; adjective описывает noun; adverb описывает действие; pronoun заменяет noun; preposition связывает слова; conjunction соединяет идеи. Отдельно запомни articles a/an/the и determiners this, that, some, any — они помогают понять, о каком количестве или предмете мы говорим.',
+  'Суть: Continuous — это «камера»: мы смотрим на действие в процессе. I am testing now. At 5 yesterday, I was testing. At 5 tomorrow, I will be testing. Формула всех трёх форм: to be + V-ing. Сравни I test every day — привычка и I am testing now — процесс.',
+  "Суть: сначала выбери точку времени, затем форму to be. Present: am/is/are + V-ing. Past: was/were + V-ing. Future: will be + V-ing. Отрицание: am not / isn't / aren't + V-ing. Вопрос: Am/Is/Are + subject + V-ing? Для Past — Was/Were, для Future — Will + subject + be + V-ing.",
+  'Суть: stative verbs называют состояние, а не действие в процессе: know, believe, understand, want, need, own, belong, remember. Обычно говорим I know, I understand, I want. Но некоторые слова меняют смысл: I think it is good — я считаю; I am thinking about it — я сейчас обдумываю.',
+  'Суть: action verbs называют действия: test, write, build, run, read. Они легко работают в Continuous: I am testing. Если действие повторяется как привычка — I test every day. Если происходит прямо сейчас — I am testing now.',
+  'Суть: один и тот же глагол иногда меняет грамматику вместе со смыслом. I think you are right — мнение. I am thinking about the problem — процесс размышления. I have a car — владение. I am having lunch — действие. Поэтому сначала определяй смысл, потом выбирай Simple или Continuous.',
+  'Суть: Perfect отвечает на вопрос «что уже произошло к моменту отсчёта?». Present Perfect: have/has + V3 — результат важен сейчас. Past Perfect: had + V3 — одно прошлое раньше другого. Future Perfect: will have + V3 — результат будет готов к сроку. V3 — третья форма глагола: worked, gone, written, seen.',
+  'Суть: Perfect Continuous = длительность процесса до точки отсчёта. Present: have/has been + V-ing; Past: had been + V-ing; Future: will have been + V-ing. For показывает период: for two hours. Since показывает начало: since Monday. Сравни: I have tested it — результат; I have been testing it for two hours — длительность.',
   'Суть: модальные глаголы выражают отношение к действию — возможность, необходимость, разрешение или совет. После большинства модальных глаголов смысловой глагол ставится без to: can swim, must stop, should rest.',
   'Can / Could выражают способность или возможность: I can swim. Must — строгая обязанность: You must stop. Should — совет: You should rest. May / Might — вероятность или вежливое разрешение: It may rain; May I come in?',
   'Суть: conditionals с if состоят из условия и результата. Zero: If + Present, Present — факты. First: If + Present, will + V — реальное будущее. Second: If + Past, would + V — нереальное настоящее или мечта. Third: If + Past Perfect, would have + V3 — сожаление о прошлом.',
@@ -58,10 +58,17 @@ const theoryByCard = [
 
 const getTheory = (title: string, index: number) => theoryByCard[index] || (title.includes('Финальная') ? 'Грамматика курса выстроена от фундамента A0-A1 к свободной речи B2. Закрепляй результат регулярным чтением, слушанием и говорением.' : 'Изучи ключевое правило, формулу и примеры темы.');
 
+const alphabetSpeech: Record<string, string> = {
+  A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
+  I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
+  Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
+  X: 'ex', Y: 'why', Z: 'zee',
+};
+
 const getAudioItems = (content: string, title: string) => {
   if (title.startsWith('Шаг 1')) return content.split(/\r?\n/).flatMap((line) => {
     const match = line.trim().match(/^([A-Z][a-z])\s+\[([^\]]+)\]\s+—\s*\(([^()]*)\)/);
-    return match ? [{ label: match[1], text: match[1][0], phonetic: match[3] }] : [];
+    return match ? [{ label: match[1], text: alphabetSpeech[match[1][0]] || match[1][0], phonetic: match[3] }] : [];
   }).slice(0, 26);
   if (title.startsWith('Шаг 2')) return [
     { label: 'make', text: 'make', phonetic: 'мейк' }, { label: 'hide', text: 'hide', phonetic: 'хайд' },
@@ -119,4 +126,94 @@ const pronounsLesson: Lesson = {
   programContent: `Личные местоимения (Subject Pronouns)\nI [aɪ] — я (ай)\nyou [juː] — ты / вы (ю)\nhe [hiː] — он (хи)\nshe [ʃiː] — она (ши)\nit [ɪt] — оно / это (ит)\nwe [wiː] — мы (уи)\nthey [ðeɪ] — они (зэй)\n\nОбъектные формы (Object Pronouns)\nme [miː] — меня / мне (ми)\nyou [juː] — тебя / вам (ю)\nhim [hɪm] — его / ему (хим)\nher [hɜː(r)] — её / ей (хёр)\nus [ʌs] — нас / нам (ас)\nthem [ðem] — их / им (зэм)\n\nПримеры\nShe helps me. [ʃiː helps miː] — Она помогает мне (ши хэлпс ми).\nThey know us. [ðeɪ nəʊ ʌs] — Они знают нас (зэй ноу ас).`,
 };
 
-export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1, explanation: index === 3 ? pronounsLesson.explanation : getTheory(lesson.title, index) }));
+
+
+const foundationLessons: Lesson[] = [
+  {
+    id: 100,
+    title: 'Артикли a / an / the',
+    caption: 'Как сказать «какой-то» и «конкретный»',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'gold',
+    module: 'Старт · программа',
+    explanation: 'Артикль стоит перед существительным и помогает понять, говорим ли мы об одном предмете вообще или о конкретном предмете. A используется перед согласным звуком: a tester. An — перед гласным звуком: an app. The — когда предмет уже известен или конкретен: the tester, the app we discussed.',
+    formula: 'a + согласный звук · an + гласный звук · the + конкретный предмет',
+    examples: [
+      { en: 'I need a laptop.', ru: 'Мне нужен ноутбук (любой подходящий).' },
+      { en: 'The laptop is on the desk.', ru: 'Этот ноутбук на столе (конкретный).' },
+    ],
+    practice: 'Вставь a, an или the в десять простых предложений о работе и доме.',
+    tip: 'Выбирай a/an по звуку, а не по букве: an hour, но a university.',
+  },
+  {
+    id: 101,
+    title: 'Множественное число и countable / uncountable',
+    caption: 'Один предмет, несколько предметов и неисчисляемые слова',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'blue',
+    module: 'Старт · программа',
+    explanation: 'Большинство исчисляемых существительных образуют множественное число через -s: test → tests. После -s, -sh, -ch, -x часто добавляется -es: box → boxes. Некоторые формы неправильные: child → children, person → people, man → men. Неисчисляемые слова обычно не получают -s: information, advice, software, equipment.',
+    formula: 'one test → two tests · much information · many tests',
+    examples: [
+      { en: 'I have two test cases.', ru: 'У меня два тест-кейса.' },
+      { en: 'We need more information.', ru: 'Нам нужно больше информации.' },
+    ],
+    practice: 'Раздели двадцать слов на countable и uncountable и составь по пять предложений.',
+    tip: 'Не говори informations или advices. Используй some information / a piece of advice.',
+  },
+  {
+    id: 102,
+    title: 'There is / There are и have / has',
+    caption: 'Как сказать, что что-то существует или принадлежит кому-то',
+    level: 'A1',
+    duration: '18 мин',
+    accent: 'mint',
+    module: 'Старт · программа',
+    explanation: 'There is/are сообщает, что где-то что-то есть: There is a bug in the app. There are three bugs. Have/has говорит о владении или наличии: I have a laptop. She has a task. Вопросы: Is there...? Are there...? Do you have...? Does she have...?',
+    formula: 'There is + one · There are + many · I/you/we/they have · he/she/it has',
+    examples: [
+      { en: 'There is a problem in production.', ru: 'В продакшене есть проблема.' },
+      { en: 'Does she have access?', ru: 'У неё есть доступ?' },
+    ],
+    practice: 'Опиши рабочий стол и тестовый проект через there is/are и have/has.',
+    tip: 'There is = «есть/находится», have = «имеет/у кого-то есть».',
+  },
+  {
+    id: 103,
+    title: 'Вопросы, отрицания и вспомогательные глаголы',
+    caption: 'Do, does, did, be, have и will',
+    level: 'A1',
+    duration: '22 мин',
+    accent: 'violet',
+    module: 'Старт · программа',
+    explanation: 'Английский часто строит вопрос с помощью вспомогательного глагола. Present Simple: Do you work? Does she work? Past Simple: Did you work? С to be: Are you ready? Was he there? Future: Will you test it? Present Perfect: Have you finished? В отрицании тот же помощник получает not: do not, does not, did not, is not, have not.',
+    formula: 'Do/Does + V1 · Did + V1 · Be + subject · Have/Has + V3 · Will + V1',
+    examples: [
+      { en: 'Did you test the fix?', ru: 'Ты протестировал исправление?' },
+      { en: 'Have you finished the report?', ru: 'Ты закончил отчёт?' },
+    ],
+    practice: 'Преврати десять утверждений в вопросы и отрицания.',
+    tip: 'Если в предложении уже есть am/is/are/was/were, do/does/did не добавляем.',
+  },
+  {
+    id: 104,
+    title: 'Предлоги, сравнение и частые неправильные глаголы',
+    caption: 'Маленькие слова, которые сильно меняют смысл',
+    level: 'A2',
+    duration: '24 мин',
+    accent: 'coral',
+    module: 'Грамматический фундамент',
+    explanation: 'Предлоги лучше учить в готовых сочетаниях: work on a project, work at a company, work from home, interested in testing, responsible for QA. Для сравнения: faster than, more reliable than, the most useful. Неправильные глаголы нельзя строить через -ed: go → went → gone, write → wrote → written, find → found → found.',
+    formula: 'work on · responsible for · interested in · -er + than · more + adjective + than',
+    examples: [
+      { en: 'This tool is more reliable than the old one.', ru: 'Этот инструмент надёжнее старого.' },
+      { en: 'I am responsible for regression testing.', ru: 'Я отвечаю за регрессионное тестирование.' },
+    ],
+    practice: 'Выучи десять неправильных глаголов в трёх формах и составь пять сравнений.',
+    tip: 'Учи предлог вместе со словом: depend on, look for, listen to, wait for.',
+  },
+];
+
+export const programLessons: Lesson[] = [...parsedLessons.slice(0, 3), pronounsLesson, ...foundationLessons, ...parsedLessons.slice(3)].map((lesson, index) => ({ ...lesson, id: index + 1 }));
