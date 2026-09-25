@@ -1,19 +1,24 @@
-import { useEffect, useState } from 'react';
-import { DictionaryPanel } from './components/vocabulary/DictionaryPanel';
-import { AccountPanel } from './components/account/AccountPanel';
+import { lazy, Suspense, useEffect, useState } from 'react';
+const DictionaryPanel = lazy(() => import('./components/vocabulary/DictionaryPanel').then((module) => ({ default: module.DictionaryPanel })));
+const AccountPanel = lazy(() => import('./components/account/AccountPanel').then((module) => ({ default: module.AccountPanel })));
+const LessonProgramPanel = lazy(() => import('./components/lesson/LessonProgramPanel').then((module) => ({ default: module.LessonProgramPanel })));
+import type { ReactNode } from 'react';
 import { Hero } from './components/dashboard/Hero';
 import { PracticeSection } from './components/dashboard/PracticeSection';
 import { StatsRow } from './components/dashboard/StatsRow';
 import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
 import { LessonRoadmap } from './components/lesson/LessonRoadmap';
-import { LessonProgramPanel } from './components/lesson/LessonProgramPanel';
 import { Button } from './components/ui/Button';
 import { SectionHeading } from './components/ui/SectionHeading';
 import { programLessons } from './data/programLessons';
 import { useProgress } from './hooks/useProgress';
 import { useAccount } from './hooks/useAccount';
 import { useTelegram } from './hooks/useTelegram';
+
+const panelFallback = (label: string): ReactNode => (
+  <div className="panel-loading" role="status" aria-live="polite">{label}</div>
+);
 
 export default function App() {
   useTelegram();
@@ -80,9 +85,13 @@ export default function App() {
         />
 
         {showDictionary ? (
-          <DictionaryPanel />
+          <Suspense fallback={panelFallback('Загружаем словарь…')}>
+            <DictionaryPanel />
+          </Suspense>
         ) : showProgram ? (
-          <LessonProgramPanel />
+          <Suspense fallback={panelFallback('Загружаем программу…')}>
+            <LessonProgramPanel />
+          </Suspense>
         ) : (
           <>
             <Hero
@@ -130,12 +139,14 @@ export default function App() {
       </main>
 
       {accountOpen && (
-        <AccountPanel
+        <Suspense fallback={panelFallback('Загружаем профиль…')}>
+          <AccountPanel
           email={account.email}
           onRegister={account.register}
           onLogout={account.logout}
           onClose={() => setAccountOpen(false)}
-        />
+          />
+        </Suspense>
       )}
     </div>
   );
