@@ -44,17 +44,21 @@ const theoryByTopic = [
   { match: /Continuous/i, text: 'Главное: Continuous показывает процесс в определённый момент. Основа одна: форма to be + V-ing. Меняется только время: am/is/are, was/were или will be.' },
   { match: /Глаголы состояния/i, text: 'Главное: stative verbs описывают состояние, мнение, чувство или владение, поэтому обычно используются в Simple: I know, I want, I understand. Не ставь их автоматически в Continuous.' },
   { match: /Глаголы действия/i, text: 'Главное: action verbs называют реальные действия: test, write, build, read. Для процесса они легко переходят в Continuous: I am testing. Для привычки — в Simple: I test every day.' },
-  { match: /Глаголы конструкции/i, text: 'Главное: некоторые глаголы меняют грамматическую конструкцию вместе со смыслом. Сначала определи, что именно означает глагол в контексте, и только потом выбирай Simple или Continuous.' },
+  { match: /Глаголы действия/i, text: 'Главное: action verbs называют реальные действия: test, write, build, read. Для процесса они легко переходят в Continuous: I am testing. Для привычки — в Simple: I test every day.' },
   { match: /Perfect/i, text: 'Главное: Perfect связывает прошлое действие с точкой отсчёта или результатом. Основа: have/has/had/will have + V3. Важно не просто «когда произошло», а что уже получено к нужному моменту.' },
   { match: /Модальные глаголы/i, text: 'Главное: модальные глаголы показывают возможность, необходимость, совет, разрешение или вероятность. После can, could, must, should, may и might основной глагол обычно идёт без to.' },
   { match: /Модальные слова/i, text: 'Главное: эти конструкции помогают уточнить степень уверенности и отношение говорящего к действию — от уверенного утверждения до предположения или вежливой просьбы.' },
   { match: /Условное предложение/i, text: 'Главное: условное предложение состоит из условия и результата. Тип выбирай по смыслу: факт, реальная возможность, нереальная ситуация сейчас или сожаление о прошлом.' },
   { match: /Глаголы речи/i, text: 'Главное: reported speech передаёт чужие слова или мысли не дословно. Обрати внимание на say, tell, explain и на изменение времени, местоимений и указателей времени.' },
-  { match: /Глаголы конструкции/i, text: 'Главное: Complex Object и Complex Subject позволяют компактно соединить действие, объект и инфинитив. Сначала распознай конструкцию, затем проверь форму глагола после объекта или пассивной конструкции.' },
+  { match: /Глаголы конструкции.*Complex Object/i, text: 'Главное: Complex Object и Complex Subject позволяют компактно соединить действие, объект и инфинитив. Сначала распознай конструкцию, затем проверь форму глагола после объекта или пассивной конструкции.' },
   { match: /Глаголы герундия/i, text: 'Главное: после разных глаголов используется либо V-ing, либо to + V. Учи управление целиком: enjoy reading, avoid making, want to learn, decide to test.' },
 ];
 
-const getTheory = (title: string) => {
+const getTheory = (title: string, content: string) => {
+  if (/Глаголы состояния/i.test(title) && /thinking|having lunch|think/i.test(content)) {
+    return 'Главное: некоторые глаголы могут менять поведение в зависимости от смысла. I think = я считаю, но I am thinking = я сейчас обдумываю. I have = владею, а I am having lunch = сейчас обедаю.';
+  }
+
   const match = theoryByTopic.find((item) => item.match.test(title));
   return match?.text || 'Главное: изучи правило, затем прочитай примеры и проговори их вслух. Теория должна помогать понять именно эту тему, а не повторять материал соседнего модуля.';
 };
@@ -94,7 +98,7 @@ const parsedLessons: Lesson[] = parseProgram(lessonSource).map((section, index) 
   duration: `${Math.max(12, Math.min(35, Math.round(section.content.length / 180)))} мин`,
   accent: accents[index % accents.length],
   module: index < 6 ? 'Старт · программа' : index < 11 ? 'Грамматический фундамент' : 'Продвинутые конструкции',
-  explanation: getTheory(section.title),
+  explanation: getTheory(section.title, section.content),
   formula: 'Открой карточку, чтобы изучить правило, таблицы, примеры и лексику.',
   examples: [],
   practice: 'Пройди весь материал темы и проговори примеры вслух.',
