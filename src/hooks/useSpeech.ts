@@ -7,26 +7,87 @@ const stopSpeech = () => {
   window.speechSynthesis.cancel();
 };
 
+const FEMALE_VOICE_NAMES = [
+  'microsoft hazel',
+  'microsoft zira',
+  'microsoft aria',
+  'microsoft jenny',
+  'google uk english female',
+  'google us english female',
+  'google english female',
+  'samantha',
+  'karen',
+  'susan',
+  'serena',
+  'ava',
+  'jenny',
+  'aria',
+  'libby',
+  'hazel',
+  'zira',
+];
+
+const MALE_VOICE_NAMES = [
+  'microsoft david',
+  'microsoft george',
+  'microsoft mark',
+  'microsoft guy',
+  'microsoft daniel',
+  'google uk english male',
+  'google us english male',
+  'daniel',
+  'alex',
+  'david',
+  'mark',
+  'george',
+];
+
 const femaleVoiceScore = (voice: SpeechSynthesisVoice, lang: string) => {
   const name = voice.name.toLowerCase();
   const voiceLang = voice.lang.toLowerCase();
   const target = lang.toLowerCase();
 
-  if (voiceLang !== target && !voiceLang.startsWith(target.split('-')[0])) return -100;
+  if (!voiceLang.startsWith(target.split('-')[0])) return -100;
 
-  let score = voiceLang === target ? 30 : 10;
-  if (/female|woman|girl|hazel|zira|samantha|susan|karen|sara|serena|ava|aria|jenny|libby|google uk english female|google us english female/i.test(name)) score += 100;
-  if (/male|man|daniel|david|mark|george|guy|alex/i.test(name)) score -= 40;
-  if (/natural|online|premium|enhanced|google|microsoft/i.test(name)) score += 15;
+  let score = voiceLang === target ? 40 : 20;
+
+  if (FEMALE_VOICE_NAMES.some((known) => name.includes(known))) score += 1000;
+  if (MALE_VOICE_NAMES.some((known) => name.includes(known))) score -= 1000;
+
+  if (/female|woman|girl/i.test(name)) score += 500;
+  if (/male|man/i.test(name)) score -= 500;
+  if (/natural|online|premium|enhanced/i.test(name)) score += 25;
 
   return score;
 };
 
 const letterSpeech: Record<string, string> = {
-  A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
-  I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
-  Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
-  X: 'ex', Y: 'why', Z: 'zed',
+  A: 'ay',
+  B: 'bee',
+  C: 'see',
+  D: 'dee',
+  E: 'ee',
+  F: 'ef',
+  G: 'gee',
+  H: 'aitch',
+  I: 'eye',
+  J: 'jay',
+  K: 'kay',
+  L: 'el',
+  M: 'em',
+  N: 'en',
+  O: 'oh',
+  P: 'pee',
+  Q: 'cue',
+  R: 'ar',
+  S: 'ess',
+  T: 'tee',
+  U: 'you',
+  V: 'vee',
+  W: 'double you',
+  X: 'ex',
+  Y: 'why',
+  Z: 'zed',
 };
 
 const normalizeSpeechText = (text: string) => {
@@ -35,7 +96,19 @@ const normalizeSpeechText = (text: string) => {
   return text;
 };
 
-const selectVoice = (voices: SpeechSynthesisVoice[], lang: string) =>
+const getEnglishVoices = (lang: string) => {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return [];
+
+  const voices = window.speechSynthesis.getVoices();
+  const target = lang.toLowerCase();
+
+  return voices.filter((voice) => {
+    const voiceLang = voice.lang.toLowerCase();
+    return voiceLang === target || voiceLang.startsWith(target.split('-')[0]);
+  });
+};
+
+const selectFemaleVoice = (voices: SpeechSynthesisVoice[], lang: string) =>
   [...voices]
     .map((voice) => ({ voice, score: femaleVoiceScore(voice, lang) }))
     .filter((item) => item.score >= 0)
@@ -63,7 +136,12 @@ export const useSpeech = () => {
 
   const speak = useCallback((text: string, lang = 'en-GB') => {
     const speechText = normalizeSpeechText(text);
-    if (typeof window === 'undefined' || !('speechSynthesis' in window) || !speechText.trim()) {
+
+    if (
+      typeof window === 'undefined' ||
+      !('speechSynthesis' in window) ||
+      !speechText.trim()
+    ) {
       return;
     }
 
@@ -77,18 +155,26 @@ export const useSpeech = () => {
 
     stopSpeech();
 
+    // Voices can load asynchronously in Chrome/Edge. Give the browser time
+    // to expose the same female English voice that was available before.
     timeoutRef.current = window.setTimeout(() => {
       timeoutRef.current = null;
 
       if (speechIdRef.current !== speechId) return;
 
+      const voices = getEnglishVoices(lang);
+      const femaleVoice = selectFemaleVoice(voices, lang);
+
       const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.lang = lang;
       utterance.rate = 0.82;
-      utterance.pitch = 1.03;
+      utterance.pitch = 1.04;
 
-      const voices = window.speechSynthesis.getVoices();
-      utterance.voice = selectVoice(voices, lang);
+      // Never deliberately choose a known male voice. If the browser has a
+      // female English voice, it is always selected explicitly.
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      }
 
       utterance.onstart = () => {
         if (speechIdRef.current !== speechId) return;
@@ -109,14 +195,33 @@ export const useSpeech = () => {
       };
 
       window.speechSynthesis.speak(utterance);
-    }, 30);
+    }, 80);
   }, []);
 
-  useEffect(() => () => {
-    if (timeoutRef.current !== null) {
-      window.clearTimeout(timeoutRef.current);
+  useEffect(() => {
+    const handleVoicesChanged = () => {
+      // Force the browser to refresh its voice list while the hook is mounted.
+      if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
+    };
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
     }
-    stopSpeech();
+
+    return () => {
+      if (
+        typeof window !== 'undefined' &&
+        'speechSynthesis' in window
+      ) {
+        window.speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+      }
+
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current);
+      }
+
+      stopSpeech();
+    };
   }, []);
 
   return { speak, stop, isPlaying, playingText };
