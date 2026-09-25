@@ -62,7 +62,7 @@ const alphabetSpeech: Record<string, string> = {
   A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
   I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
   Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
-  X: 'ex', Y: 'why', Z: 'zee',
+  X: 'ex', Y: 'why', Z: 'zed',
 };
 
 const getAudioItems = (content: string, title: string) => {
