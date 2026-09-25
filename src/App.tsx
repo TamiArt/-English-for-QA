@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 const DashboardPanel = lazy(() => import('./components/dashboard/DashboardPanel').then((module) => ({ default: module.DashboardPanel })));
 const DictionaryPanel = lazy(() => import('./components/vocabulary/DictionaryPanel').then((module) => ({ default: module.DictionaryPanel })));
-const AccountPanel = lazy(() => import('./components/account/AccountPanel').then((module) => ({ default: module.AccountPanel })));
+import { AccountPanel } from './components/account/AccountPanel';
 const LessonProgramPanel = lazy(() => import('./components/lesson/LessonProgramPanel').then((module) => ({ default: module.LessonProgramPanel })));
 import type { ReactNode } from 'react';
 import { Sidebar } from './components/layout/Sidebar';
