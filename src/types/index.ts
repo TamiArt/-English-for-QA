@@ -1,4 +1,4 @@
-export type VocabularyLevel = 'A1' | 'A2' | 'B1' | 'B2';
+export type VocabularyLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
 export type VocabularyCategory = 'general' | 'it';
 
 export interface DictionaryEntry {
@@ -9,6 +9,7 @@ export interface DictionaryEntry {
   phoneticRu: string;
   level: VocabularyLevel;
   category: VocabularyCategory;
+  topic?: string;
   examples?: { en: string; ru: string; phoneticRu: string }[];
 }
 
