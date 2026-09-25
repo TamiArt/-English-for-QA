@@ -58,10 +58,17 @@ const theoryByCard = [
 
 const getTheory = (title: string, index: number) => theoryByCard[index] || (title.includes('Финальная') ? 'Грамматика курса выстроена от фундамента A0-A1 к свободной речи B2. Закрепляй результат регулярным чтением, слушанием и говорением.' : 'Изучи ключевое правило, формулу и примеры темы.');
 
+const alphabetSpeech: Record<string, string> = {
+  A: 'ay', B: 'bee', C: 'see', D: 'dee', E: 'ee', F: 'ef', G: 'gee', H: 'aitch',
+  I: 'eye', J: 'jay', K: 'kay', L: 'el', M: 'em', N: 'en', O: 'oh', P: 'pee',
+  Q: 'cue', R: 'ar', S: 'ess', T: 'tee', U: 'you', V: 'vee', W: 'double you',
+  X: 'ex', Y: 'why', Z: 'zee',
+};
+
 const getAudioItems = (content: string, title: string) => {
   if (title.startsWith('Шаг 1')) return content.split(/\r?\n/).flatMap((line) => {
     const match = line.trim().match(/^([A-Z][a-z])\s+\[([^\]]+)\]\s+—\s*\(([^()]*)\)/);
-    return match ? [{ label: match[1], text: match[1][0], phonetic: match[3] }] : [];
+    return match ? [{ label: match[1], text: alphabetSpeech[match[1][0]] || match[1][0], phonetic: match[3] }] : [];
   }).slice(0, 26);
   if (title.startsWith('Шаг 2')) return [
     { label: 'make', text: 'make', phonetic: 'мейк' }, { label: 'hide', text: 'hide', phonetic: 'хайд' },
